@@ -44,7 +44,7 @@ export class CreateTables1713990961987 implements MigrationInterface {
           {
             name: 'type',
             type: 'varchar',
-            length: '50',
+            length: '20',
           },
           {
             name: 'origin',

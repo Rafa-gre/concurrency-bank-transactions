@@ -1,23 +1,36 @@
-import { Controller, Get, Post, Body, Param } from '@nestjs/common';
-import { CreateAccountDto } from '../dto/create-account.dto';
+import { Controller, Post, Body, Inject } from '@nestjs/common';
+import {
+  CreateAccountDto,
+  CreateAccountResponse,
+} from '../dto/create-account.dto';
 import { AccountsService } from '../services/accounts.service';
+import {
+  ApiBadRequestResponse,
+  ApiCreatedResponse,
+  ApiInternalServerErrorResponse,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
 
+@ApiTags('Accounts')
 @Controller('accounts')
 export class AccountsController {
-  constructor(private readonly accountsService: AccountsService) {}
+  constructor(
+    @Inject(AccountsService)
+    private readonly accountsService: AccountsService,
+  ) {}
 
+  @ApiOperation({ summary: 'Create account' })
+  @ApiCreatedResponse({
+    description: 'Successfully created account',
+    type: CreateAccountResponse,
+  })
+  @ApiBadRequestResponse({ description: 'Invalid request body' })
+  @ApiInternalServerErrorResponse({ description: 'Internal server error' })
   @Post()
-  create(@Body() createAccountDto: CreateAccountDto) {
-    return this.accountsService.create(createAccountDto);
-  }
-
-  @Get()
-  findAll() {
-    return this.accountsService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.accountsService.findOne(+id);
+  async createAccount(
+    @Body() account: CreateAccountDto,
+  ): Promise<CreateAccountResponse> {
+    return await this.accountsService.create(account);
   }
 }

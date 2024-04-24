@@ -3,7 +3,10 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Account } from '../entities/account.entity';
 import { IAccountRepository } from '../interfaces/IAccountRepository';
-import { CreateAccountDto } from '../dto/create-account.dto';
+import {
+  CreateAccountDto,
+  CreateAccountResponse,
+} from '../dto/create-account.dto';
 
 @Injectable()
 export class AccountsService {
@@ -11,11 +14,14 @@ export class AccountsService {
     @InjectRepository(Account)
     private readonly accountsRepository: IAccountRepository,
   ) {}
-  create(createAccountDto: CreateAccountDto) {
-    this.accountsRepository.create(createAccountDto);
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} account`;
+  async create(
+    createAccountDto: CreateAccountDto,
+  ): Promise<CreateAccountResponse> {
+    const account = this.accountsRepository.create(createAccountDto);
+    await this.accountsRepository.save(account);
+    return {
+      accountNumber: account.accountNumber,
+      balance: account.balance,
+    };
   }
 }
