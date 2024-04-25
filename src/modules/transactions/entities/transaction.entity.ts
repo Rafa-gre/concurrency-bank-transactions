@@ -1,7 +1,11 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 import { Account } from '../../accounts/entities/account.entity';
 
-export type TransactionType = 'deposit' | 'withdraw' | 'transfer';
+export enum TransactionType {
+  DEPOSIT = 'deposit',
+  WITHDRAW = 'withdraw',
+  TRANSFER = 'transfer',
+}
 
 @Entity()
 export class Transaction {

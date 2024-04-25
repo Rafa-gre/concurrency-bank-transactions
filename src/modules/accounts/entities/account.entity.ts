@@ -9,6 +9,6 @@ export class Account {
   @Column({ type: 'decimal', precision: 10, scale: 2, default: 0 })
   balance: number;
 
-  @VersionColumn()
+  @VersionColumn() //TODO: Remover caso não utilize Modo Otimista
   version: number;
 }
