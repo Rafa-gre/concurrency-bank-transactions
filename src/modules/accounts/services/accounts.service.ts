@@ -47,7 +47,6 @@ export class AccountsService {
     if (!account) {
       throw new NotFoundException('Account not found');
     }
-
     const operations = {
       [OperationType.ADD]: () => (account.balance += amount),
       [OperationType.SUBTRACT]: () => {

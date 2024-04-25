@@ -42,3 +42,38 @@ export class CreateTransactionDto {
   @IsPositive()
   amount: number;
 }
+
+export class CreateTransactionResponse {
+  @ApiProperty({
+    description: 'Type of transaction',
+    example: 'deposit',
+    enum: TransactionType,
+  })
+  @IsNotEmpty()
+  @IsEnum(TransactionType)
+  type: TransactionType;
+
+  @ApiProperty({ description: 'Origin account id', example: 1, type: 'number' })
+  @IsNotEmpty()
+  @IsNumber()
+  @IsPositive()
+  @IsOptional()
+  originId?: number;
+
+  @ApiProperty({
+    description: 'Destination account id',
+    example: 1,
+    type: 'number',
+  })
+  @IsNotEmpty()
+  @IsNumber()
+  @IsPositive()
+  @IsOptional()
+  destinationId?: number;
+
+  @ApiProperty({ description: 'Value', example: 100, type: 'number' })
+  @IsNotEmpty()
+  @IsNumber()
+  @IsPositive()
+  amount: number;
+}

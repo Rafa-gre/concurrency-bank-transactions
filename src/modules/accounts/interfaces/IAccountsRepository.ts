@@ -1,8 +1,8 @@
-import { EntityManager, Repository } from 'typeorm';
+import { EntityManager } from 'typeorm';
 import { Account } from '../entities/account.entity';
 import { CreateAccountDto } from '../dto/create-account.dto';
 
-export interface IAccountsRepository extends Repository<Account> {
+export interface IAccountsRepository {
   createAccount(createAccountDto: CreateAccountDto): Promise<Account>;
   findByAccountNumber(
     accountNumber: number,

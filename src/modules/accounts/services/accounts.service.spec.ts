@@ -5,19 +5,23 @@ import { Account } from '../entities/account.entity';
 import { ForbiddenException } from '@nestjs/common';
 import { IAccountsRepository } from '../interfaces/IAccountsRepository';
 import { AccountsRepository } from '../repository/accounts.repository';
-import { createMock } from '@golevelup/ts-jest';
 
 describe('AccountsService', () => {
   let service: AccountsService;
   let repo: IAccountsRepository;
 
   beforeEach(async () => {
+    const repoMock = {
+      create: jest.fn(),
+      save: jest.fn(),
+      findOne: jest.fn(),
+    };
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         AccountsService,
         {
           provide: 'IAccountsRepository',
-          useValue: createMock<AccountsRepository>(),
+          useValue: new AccountsRepository(repoMock as any),
         },
       ],
     }).compile();
@@ -41,9 +45,6 @@ describe('AccountsService', () => {
         balance: 1000,
         version: 1,
       });
-
-      jest.spyOn(repo, 'create').mockReturnValue(account);
-      jest.spyOn(repo, 'save').mockResolvedValue(account);
 
       const result = await service.create({ balance: 1000 });
 

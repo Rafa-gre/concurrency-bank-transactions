@@ -3,6 +3,7 @@ import {
   ConflictException,
   Inject,
   Injectable,
+  InternalServerErrorException,
 } from '@nestjs/common';
 import { EntityManager } from 'typeorm';
 import { ITransactionRepository } from '../interfaces/ITransactionRepository';
@@ -59,11 +60,15 @@ export class TransactionsService {
         );
         break;
       } catch (error) {
-        if (error.code === '40001' && retries) {
-          retries--;
+        if (error.code === '40001') {
+          if (retries) {
+            retries--;
+          } else {
+            throw new ConflictException('Conflict Error');
+          }
         } else {
-          console.log('AAAAAAAAAAAAAAA', error);
-          throw new ConflictException('Conflict Error');
+          console.error('Erro inesperado:', error);
+          throw new InternalServerErrorException('Internal Server Error');
         }
       }
     }
@@ -94,10 +99,15 @@ export class TransactionsService {
         );
         break;
       } catch (error) {
-        if (error.code === '40001' && retries) {
-          retries--;
+        if (error.code === '40001') {
+          if (retries) {
+            retries--;
+          } else {
+            throw new ConflictException('Conflict Error');
+          }
         } else {
-          throw new ConflictException('Conflict Error');
+          console.error('Erro inesperado:', error);
+          throw new InternalServerErrorException('Internal Server Error');
         }
       }
     }
@@ -134,10 +144,15 @@ export class TransactionsService {
         );
         break;
       } catch (error) {
-        if (error.code === '40001' && retries) {
-          retries--;
+        if (error.code === '40001') {
+          if (retries) {
+            retries--;
+          } else {
+            throw new ConflictException('Conflict Error');
+          }
         } else {
-          throw new ConflictException('Conflict Error');
+          console.error('Erro inesperado:', error);
+          throw new InternalServerErrorException('Internal Server Error');
         }
       }
     }

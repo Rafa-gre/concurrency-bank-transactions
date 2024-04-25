@@ -7,7 +7,9 @@ import { AccountsService } from '../services/accounts.service';
 import {
   ApiBadRequestResponse,
   ApiCreatedResponse,
+  ApiForbiddenResponse,
   ApiInternalServerErrorResponse,
+  ApiNotFoundResponse,
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
@@ -25,7 +27,9 @@ export class AccountsController {
     description: 'Successfully created account',
     type: CreateAccountResponse,
   })
-  @ApiBadRequestResponse({ description: 'Invalid request body' })
+  @ApiBadRequestResponse({ description: 'Invalid transaction data' })
+  @ApiNotFoundResponse({ description: 'Account not found' })
+  @ApiForbiddenResponse({ description: 'Insufficient funds' })
   @ApiInternalServerErrorResponse({ description: 'Internal server error' })
   @Post()
   async createAccount(

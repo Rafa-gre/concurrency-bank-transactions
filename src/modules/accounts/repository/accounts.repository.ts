@@ -2,14 +2,16 @@ import { EntityManager, Repository } from 'typeorm';
 import { Account } from '../entities/account.entity';
 import { IAccountsRepository } from '../interfaces/IAccountsRepository';
 import { CreateAccountDto } from '../dto/create-account.dto';
+import { InjectRepository } from '@nestjs/typeorm';
 
-export class AccountsRepository
-  extends Repository<Account>
-  implements IAccountsRepository
-{
+export class AccountsRepository implements IAccountsRepository {
+  constructor(
+    @InjectRepository(Account)
+    private readonly typeormRepository: Repository<Account>,
+  ) {}
   async createAccount(createAccountDto: CreateAccountDto): Promise<Account> {
-    const account = this.create(createAccountDto);
-    await this.save(account);
+    const account = this.typeormRepository.create(createAccountDto);
+    await this.typeormRepository.save(account);
     return account;
   }
 
@@ -23,7 +25,7 @@ export class AccountsRepository
         lock: { mode: 'pessimistic_write' },
       });
     } else {
-      return this.findOne({
+      return this.typeormRepository.findOne({
         where: { accountNumber },
         lock: { mode: 'pessimistic_write' },
       });
@@ -36,7 +38,7 @@ export class AccountsRepository
     if (transactionalEntityManager) {
       return await transactionalEntityManager.save(account);
     } else {
-      return this.save(account);
+      return this.typeormRepository.save(account);
     }
   }
 }
