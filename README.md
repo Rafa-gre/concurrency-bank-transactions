@@ -76,6 +76,8 @@ $ npm run start:prod
 
 ## Testes
 
+Os testes end-to-end possuem os cenários de teste disponibilizados na tabela verdade que demonstram a capacidade do sistema de lidar com transações concorrentes.
+
 Para rodar os testes, use um dos seguintes comandos:
 
 ```bash
