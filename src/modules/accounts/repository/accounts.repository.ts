@@ -27,7 +27,6 @@ export class AccountsRepository implements IAccountsRepository {
     } else {
       return this.typeormRepository.findOne({
         where: { accountNumber },
-        lock: { mode: 'pessimistic_write' },
       });
     }
   }

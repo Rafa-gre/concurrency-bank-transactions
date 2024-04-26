@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Inject } from '@nestjs/common';
+import { Controller, Post, Body, Inject, Get, Param } from '@nestjs/common';
 import {
   CreateAccountDto,
   CreateAccountResponse,
@@ -15,7 +15,7 @@ import {
 } from '@nestjs/swagger';
 
 @ApiTags('Accounts')
-@Controller('accounts')
+@Controller('account')
 export class AccountsController {
   constructor(
     @Inject(AccountsService)
@@ -36,5 +36,16 @@ export class AccountsController {
     @Body() account: CreateAccountDto,
   ): Promise<CreateAccountResponse> {
     return await this.accountsService.create(account);
+  }
+
+  @ApiOperation({ summary: 'Create account' })
+  @ApiCreatedResponse({
+    description: 'Successfully created account',
+    type: CreateAccountResponse,
+  })
+  @ApiNotFoundResponse({ description: 'Account not found' })
+  @Get(':id')
+  async findOne(@Param('id') id: string) {
+    return await this.accountsService.findOneAccount(+id);
   }
 }

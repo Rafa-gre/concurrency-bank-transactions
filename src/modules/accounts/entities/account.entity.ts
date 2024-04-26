@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn, VersionColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { ValueTransformer } from 'typeorm';
 
 const decimalTransformer: ValueTransformer = {
@@ -19,7 +19,4 @@ export class Account {
     transformer: decimalTransformer,
   })
   balance: number;
-
-  @VersionColumn() //TODO: Remover caso não utilize Modo Otimista
-  version: number;
 }

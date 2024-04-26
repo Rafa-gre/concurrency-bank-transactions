@@ -1,4 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
 import { Account } from '../../accounts/entities/account.entity';
 
 export enum TransactionType {
@@ -16,9 +22,11 @@ export class Transaction {
   type: TransactionType;
 
   @ManyToOne(() => Account, { nullable: true })
+  @JoinColumn({ name: 'origin' })
   origin: Account;
 
   @ManyToOne(() => Account, { nullable: true })
+  @JoinColumn({ name: 'destination' })
   destination: Account;
 
   @Column({ type: 'decimal', precision: 10, scale: 2 })

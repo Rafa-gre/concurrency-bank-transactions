@@ -20,11 +20,6 @@ export class CreateTables1713990961987 implements MigrationInterface {
             scale: 2,
             default: 0,
           },
-          {
-            name: 'version',
-            type: 'int',
-            isNullable: false,
-          },
         ],
       }),
       true,
@@ -32,7 +27,7 @@ export class CreateTables1713990961987 implements MigrationInterface {
 
     await queryRunner.createTable(
       new Table({
-        name: 'transactions',
+        name: 'transaction',
         columns: [
           {
             name: 'id',
@@ -83,7 +78,7 @@ export class CreateTables1713990961987 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('transactions');
+    await queryRunner.dropTable('transaction');
     await queryRunner.dropTable('account');
   }
 }

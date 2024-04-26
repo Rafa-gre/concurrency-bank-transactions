@@ -33,6 +33,18 @@ export class AccountsService {
     };
   }
 
+  async findOneAccount(accountId: number): Promise<CreateAccountResponse> {
+    const account =
+      await this.accountsRepository.findByAccountNumber(accountId);
+    if (!account) {
+      throw new NotFoundException('Account not found');
+    }
+    return {
+      accountNumber: account.accountNumber,
+      balance: account.balance,
+    };
+  }
+
   async updateBalance(
     accountId: number,
     amount: number,
