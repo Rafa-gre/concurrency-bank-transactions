@@ -43,7 +43,6 @@ describe('AccountsService', () => {
       jest.spyOn(repo, 'createAccount').mockResolvedValue({
         accountNumber: 123456,
         balance: 1000,
-        version: 1,
       });
 
       const result = await service.create({ balance: 1000 });

@@ -21,8 +21,6 @@ describe('TransactionsController (e2e)', () => {
       .post('/account')
       .send({ balance: 0 });
 
-    console.log('AAAAAAAAAAA', accountCreated.body);
-
     await request(app.getHttpServer()).post('/transactions').send({
       type: TransactionType.DEPOSIT,
       destinationId: accountCreated.body.accountNumber,
@@ -32,8 +30,6 @@ describe('TransactionsController (e2e)', () => {
     const account = await request(app.getHttpServer()).get(
       `/account/${accountCreated.body.accountNumber}`,
     );
-
-    console.log('BBBBBBBBBBB', account.body);
 
     expect(account.body.balance).toBe(100);
   });

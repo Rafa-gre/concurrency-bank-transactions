@@ -101,7 +101,7 @@ describe('TransactionsService', () => {
     it('should create a deposit transaction', async () => {
       const transaction = new Transaction();
       transaction.amount = 1000;
-      transaction.destination = { accountNumber: 1, balance: 0, version: 1 };
+      transaction.destination = { accountNumber: 1, balance: 0 };
 
       const mockManager = {
         transaction: jest
@@ -172,7 +172,7 @@ describe('TransactionsService', () => {
     it('should retry and succeed when transaction fails with error code 40001', async () => {
       const transaction = new Transaction();
       transaction.amount = 1000;
-      transaction.destination = { accountNumber: 1, balance: 0, version: 1 };
+      transaction.destination = { accountNumber: 1, balance: 0 };
 
       const mockManager = {
         transaction: jest
@@ -208,7 +208,7 @@ describe('TransactionsService', () => {
     it('should throw ConflictException when transaction fails with error code 40001 after all retries', async () => {
       const transaction = new Transaction();
       transaction.amount = 1000;
-      transaction.destination = { accountNumber: 1, balance: 0, version: 1 };
+      transaction.destination = { accountNumber: 1, balance: 0 };
 
       const mockManager = {
         transaction: jest.fn().mockImplementation(() => {
@@ -246,7 +246,7 @@ describe('TransactionsService', () => {
     it('should create a withdraw transaction', async () => {
       const transaction = new Transaction();
       transaction.amount = 1000;
-      transaction.origin = { accountNumber: 1, balance: 0, version: 1 };
+      transaction.origin = { accountNumber: 1, balance: 0 };
 
       const mockManager = {
         transaction: jest
@@ -317,7 +317,7 @@ describe('TransactionsService', () => {
     it('should retry and succeed when transaction fails with error code 40001', async () => {
       const transaction = new Transaction();
       transaction.amount = 1000;
-      transaction.origin = { accountNumber: 1, balance: 1000, version: 1 };
+      transaction.origin = { accountNumber: 1, balance: 1000 };
 
       const mockManager = {
         transaction: jest
@@ -353,7 +353,7 @@ describe('TransactionsService', () => {
     it('should throw ConflictException when transaction fails with error code 40001 after all retries', async () => {
       const transaction = new Transaction();
       transaction.amount = 1000;
-      transaction.origin = { accountNumber: 1, balance: 1000, version: 1 };
+      transaction.origin = { accountNumber: 1, balance: 1000 };
 
       const mockManager = {
         transaction: jest.fn().mockImplementation(() => {
@@ -391,8 +391,8 @@ describe('TransactionsService', () => {
     it('should create a transfer transaction', async () => {
       const transaction = new Transaction();
       transaction.amount = 1000;
-      transaction.origin = { accountNumber: 1, balance: 0, version: 1 };
-      transaction.destination = { accountNumber: 1, balance: 0, version: 1 };
+      transaction.origin = { accountNumber: 1, balance: 0 };
+      transaction.destination = { accountNumber: 1, balance: 0 };
 
       const mockManager = {
         transaction: jest
@@ -481,8 +481,8 @@ describe('TransactionsService', () => {
     it('should retry and succeed when transaction fails with error code 40001', async () => {
       const transaction = new Transaction();
       transaction.amount = 1000;
-      transaction.origin = { accountNumber: 1, balance: 1000, version: 1 };
-      transaction.destination = { accountNumber: 2, balance: 0, version: 1 };
+      transaction.origin = { accountNumber: 1, balance: 1000 };
+      transaction.destination = { accountNumber: 2, balance: 0 };
 
       const mockManager = {
         transaction: jest
@@ -519,8 +519,8 @@ describe('TransactionsService', () => {
     it('should throw ConflictException when transaction fails with error code 40001 after all retries', async () => {
       const transaction = new Transaction();
       transaction.amount = 1000;
-      transaction.origin = { accountNumber: 1, balance: 1000, version: 1 };
-      transaction.destination = { accountNumber: 2, balance: 0, version: 1 };
+      transaction.origin = { accountNumber: 1, balance: 1000 };
+      transaction.destination = { accountNumber: 2, balance: 0 };
 
       const mockManager = {
         transaction: jest.fn().mockImplementation(() => {

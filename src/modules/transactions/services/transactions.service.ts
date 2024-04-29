@@ -42,7 +42,6 @@ export class TransactionsService {
     }
     const transaction =
       this.transactionsRepository.createTransaction(createTransactionDto);
-    console.log('AAAAAAAAAAAAAA', transaction);
     let retries = 3;
     while (retries) {
       try {
